@@ -14,19 +14,14 @@ const pdfOptions = {
 };
 
 const SchedulePage: React.FC = () => {
-  const originalPdfUrl = "assets/pdf/Tiger-Lees-Class-Schedule-2025.pdf";
-  // Use a CORS proxy for the default viewer URL to allow PDF.js to fetch the bytes
-  const proxiedPdfUrl = originalPdfUrl;
+  const pdfUrl = "assets/pdf/Tiger-Lees-Class-Schedule-2025.pdf";
 
-  const [pdfUrl, setPdfUrl] = useState<string>(proxiedPdfUrl);
-  const [downloadUrl, setDownloadUrl] = useState<string>(originalPdfUrl);
   const [numPages, setNumPages] = useState<number | null>(null);
   const [containerWidth, setContainerWidth] = useState<number>(0);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<boolean>(false);
 
   const containerRef = useRef<HTMLDivElement>(null);
-  const objectUrlRef = useRef<string | null>(null);
 
   // Handle responsive sizing
   useEffect(() => {
@@ -39,71 +34,6 @@ const SchedulePage: React.FC = () => {
     updateWidth();
     window.addEventListener('resize', updateWidth);
     return () => window.removeEventListener('resize', updateWidth);
-  }, []);
-
-  // Helper to convert Base64 Data URI to Blob
-  const dataURItoBlob = (dataURI: string) => {
-    if (dataURI.startsWith('blob:')) return null;
-
-    try {
-      const byteString = atob(dataURI.split(',')[1]);
-      const mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0];
-      const ab = new ArrayBuffer(byteString.length);
-      const ia = new Uint8Array(ab);
-      for (let i = 0; i < byteString.length; i++) {
-        ia[i] = byteString.charCodeAt(i);
-      }
-      return new Blob([ab], { type: mimeString });
-    } catch (e) {
-      console.error("Error converting PDF data", e);
-      return null;
-    }
-  };
-
-  const loadSchedule = () => {
-    setLoading(true);
-    setError(false);
-
-    // Clean up previous object URL if it exists
-    if (objectUrlRef.current) {
-      URL.revokeObjectURL(objectUrlRef.current);
-      objectUrlRef.current = null;
-    }
-
-    const uploadedSchedule = localStorage.getItem('tigerlee_schedule_pdf');
-    if (uploadedSchedule) {
-      const blob = dataURItoBlob(uploadedSchedule);
-      if (blob) {
-        const url = URL.createObjectURL(blob);
-        objectUrlRef.current = url;
-        setPdfUrl(url);
-        setDownloadUrl(url); // Download the blob directly
-      } else {
-        setPdfUrl(proxiedPdfUrl);
-        setDownloadUrl(originalPdfUrl); // Download original for default
-      }
-    } else {
-      setPdfUrl(proxiedPdfUrl);
-      setDownloadUrl(originalPdfUrl); // Download original for default
-    }
-  };
-
-  useEffect(() => {
-    loadSchedule();
-
-    const handleUpdate = () => {
-      loadSchedule();
-    };
-
-    window.dispatchEvent(new Event('resize')); // Trigger resize check
-
-    window.addEventListener('scheduleUpdated', handleUpdate);
-    return () => {
-      window.removeEventListener('scheduleUpdated', handleUpdate);
-      if (objectUrlRef.current) {
-        URL.revokeObjectURL(objectUrlRef.current);
-      }
-    };
   }, []);
 
   function onDocumentLoadSuccess({ numPages }: { numPages: number }) {
@@ -150,7 +80,7 @@ const SchedulePage: React.FC = () => {
           <div className="flex flex-col md:flex-row justify-between items-center mb-4 md:mb-8 gap-4 px-4 md:px-0">
             <h2 className="font-heading text-3xl font-bold text-gray-900">Current Schedule</h2>
             <a
-              href={downloadUrl}
+              href={pdfUrl}
               download="Tiger-Lee-Schedule.pdf"
               target="_blank"
               rel="noopener noreferrer"
@@ -172,7 +102,7 @@ const SchedulePage: React.FC = () => {
                   The schedule PDF could not be loaded directly due to network restrictions or browser compatibility.
                 </p>
                 <a
-                  href={downloadUrl}
+                  href={pdfUrl}
                   download="Tiger-Lee-Schedule.pdf"
                   className="inline-block bg-brand-dark text-white px-6 py-3 rounded-lg hover:bg-gray-800 transition-colors"
                 >
