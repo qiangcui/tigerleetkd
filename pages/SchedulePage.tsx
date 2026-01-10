@@ -9,14 +9,14 @@ import { Document, Page, pdfjs } from 'react-pdf';
 pdfjs.GlobalWorkerOptions.workerSrc = `https://unpkg.com/pdfjs-dist@4.4.168/build/pdf.worker.min.mjs`;
 
 const pdfOptions = {
-    cMapUrl: 'https://unpkg.com/pdfjs-dist@4.4.168/cmaps/',
-    standardFontDataUrl: 'https://unpkg.com/pdfjs-dist@4.4.168/standard_fonts/',
+  cMapUrl: 'https://unpkg.com/pdfjs-dist@4.4.168/cmaps/',
+  standardFontDataUrl: 'https://unpkg.com/pdfjs-dist@4.4.168/standard_fonts/',
 };
 
 const SchedulePage: React.FC = () => {
-  const originalPdfUrl = "https://www.tigerleestkd.com/wp-content/uploads/2025/11/Tiger-Lees-Class-Schedule-2025.pdf";
+  const originalPdfUrl = "/assets/pdf/Tiger-Lees-Class-Schedule-2025.pdf";
   // Use a CORS proxy for the default viewer URL to allow PDF.js to fetch the bytes
-  const proxiedPdfUrl = `https://corsproxy.io/?${encodeURIComponent(originalPdfUrl)}`;
+  const proxiedPdfUrl = originalPdfUrl;
 
   const [pdfUrl, setPdfUrl] = useState<string>(proxiedPdfUrl);
   const [downloadUrl, setDownloadUrl] = useState<string>(originalPdfUrl);
@@ -24,7 +24,7 @@ const SchedulePage: React.FC = () => {
   const [containerWidth, setContainerWidth] = useState<number>(0);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<boolean>(false);
-  
+
   const containerRef = useRef<HTMLDivElement>(null);
   const objectUrlRef = useRef<string | null>(null);
 
@@ -46,63 +46,63 @@ const SchedulePage: React.FC = () => {
     if (dataURI.startsWith('blob:')) return null;
 
     try {
-        const byteString = atob(dataURI.split(',')[1]);
-        const mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0];
-        const ab = new ArrayBuffer(byteString.length);
-        const ia = new Uint8Array(ab);
-        for (let i = 0; i < byteString.length; i++) {
-            ia[i] = byteString.charCodeAt(i);
-        }
-        return new Blob([ab], { type: mimeString });
+      const byteString = atob(dataURI.split(',')[1]);
+      const mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0];
+      const ab = new ArrayBuffer(byteString.length);
+      const ia = new Uint8Array(ab);
+      for (let i = 0; i < byteString.length; i++) {
+        ia[i] = byteString.charCodeAt(i);
+      }
+      return new Blob([ab], { type: mimeString });
     } catch (e) {
-        console.error("Error converting PDF data", e);
-        return null;
+      console.error("Error converting PDF data", e);
+      return null;
     }
   };
 
   const loadSchedule = () => {
     setLoading(true);
     setError(false);
-    
+
     // Clean up previous object URL if it exists
     if (objectUrlRef.current) {
-        URL.revokeObjectURL(objectUrlRef.current);
-        objectUrlRef.current = null;
+      URL.revokeObjectURL(objectUrlRef.current);
+      objectUrlRef.current = null;
     }
 
     const uploadedSchedule = localStorage.getItem('tigerlee_schedule_pdf');
     if (uploadedSchedule) {
       const blob = dataURItoBlob(uploadedSchedule);
       if (blob) {
-          const url = URL.createObjectURL(blob);
-          objectUrlRef.current = url;
-          setPdfUrl(url);
-          setDownloadUrl(url); // Download the blob directly
+        const url = URL.createObjectURL(blob);
+        objectUrlRef.current = url;
+        setPdfUrl(url);
+        setDownloadUrl(url); // Download the blob directly
       } else {
-          setPdfUrl(proxiedPdfUrl);
-          setDownloadUrl(originalPdfUrl); // Download original for default
-      }
-    } else {
         setPdfUrl(proxiedPdfUrl);
         setDownloadUrl(originalPdfUrl); // Download original for default
+      }
+    } else {
+      setPdfUrl(proxiedPdfUrl);
+      setDownloadUrl(originalPdfUrl); // Download original for default
     }
   };
 
   useEffect(() => {
     loadSchedule();
-    
+
     const handleUpdate = () => {
-        loadSchedule();
+      loadSchedule();
     };
 
     window.dispatchEvent(new Event('resize')); // Trigger resize check
 
     window.addEventListener('scheduleUpdated', handleUpdate);
     return () => {
-        window.removeEventListener('scheduleUpdated', handleUpdate);
-        if (objectUrlRef.current) {
-            URL.revokeObjectURL(objectUrlRef.current);
-        }
+      window.removeEventListener('scheduleUpdated', handleUpdate);
+      if (objectUrlRef.current) {
+        URL.revokeObjectURL(objectUrlRef.current);
+      }
     };
   }, []);
 
@@ -121,14 +121,14 @@ const SchedulePage: React.FC = () => {
   return (
     <div className="pt-0 bg-white">
       {/* Page Header */}
-      <div className="relative h-[300px] w-full overflow-hidden bg-brand-dark flex items-center">
-        <div 
+      <div className="relative h-[400px] w-full overflow-hidden bg-brand-dark flex items-center">
+        <div
           className="absolute inset-0 bg-cover bg-center"
-          style={{ backgroundImage: "url('https://www.tigerleestkd.com/wp-content/uploads/2018/04/exterior-tigerlee.jpg')" }}
+          style={{ backgroundImage: "url('/assets/images/exterior-tigerlee.jpg')" }}
         ></div>
         <div className="absolute inset-0 bg-black/60"></div>
 
-        <div className="relative z-10 container mx-auto px-4 pt-20">
+        <div className="relative z-10 container mx-auto px-4 pt-32">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
@@ -145,73 +145,73 @@ const SchedulePage: React.FC = () => {
         </div>
       </div>
 
-      <div className="container mx-auto px-4 py-16">
+      <div className="container mx-auto px-0 md:px-4 pt-4 md:py-16 pb-16">
         <div className="max-w-5xl mx-auto">
-            <div className="flex flex-col md:flex-row justify-between items-center mb-8 gap-4">
-                <h2 className="font-heading text-3xl font-bold text-gray-900">Current Schedule</h2>
-                <a 
-                    href={downloadUrl} 
-                    download="Tiger-Lee-Schedule.pdf"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center bg-brand-red text-white px-6 py-2 rounded-full font-bold hover:bg-red-700 transition-colors shadow-md"
+          <div className="flex flex-col md:flex-row justify-between items-center mb-4 md:mb-8 gap-4 px-4 md:px-0">
+            <h2 className="font-heading text-3xl font-bold text-gray-900">Current Schedule</h2>
+            <a
+              href={downloadUrl}
+              download="Tiger-Lee-Schedule.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center bg-brand-red text-white px-6 py-2 rounded-full font-bold hover:bg-red-700 transition-colors shadow-md"
+            >
+              <Download size={20} className="mr-2" />
+              Download PDF
+            </a>
+          </div>
+
+          {/* PDF Viewer Container */}
+          <div ref={containerRef} className="w-full min-h-0 md:min-h-[500px] bg-white md:bg-gray-100 md:rounded-xl md:shadow-lg md:border border-gray-200 overflow-hidden relative flex flex-col items-center justify-center p-0 md:p-8">
+
+            {error && (
+              <div className="text-center p-8 max-w-md">
+                <AlertCircle size={48} className="mx-auto text-brand-red mb-4" />
+                <h3 className="text-xl font-bold text-gray-900 mb-2">Unable to Preview Schedule</h3>
+                <p className="text-gray-600 mb-6">
+                  The schedule PDF could not be loaded directly due to network restrictions or browser compatibility.
+                </p>
+                <a
+                  href={downloadUrl}
+                  download="Tiger-Lee-Schedule.pdf"
+                  className="inline-block bg-brand-dark text-white px-6 py-3 rounded-lg hover:bg-gray-800 transition-colors"
                 >
-                    <Download size={20} className="mr-2" />
-                    Download PDF
+                  Download PDF Instead
                 </a>
-            </div>
+              </div>
+            )}
 
-            {/* PDF Viewer Container */}
-            <div ref={containerRef} className="w-full min-h-[500px] bg-gray-100 rounded-xl shadow-lg border border-gray-200 overflow-hidden relative flex flex-col items-center justify-center p-4 md:p-8">
-                
-                {error && (
-                  <div className="text-center p-8 max-w-md">
-                    <AlertCircle size={48} className="mx-auto text-brand-red mb-4" />
-                    <h3 className="text-xl font-bold text-gray-900 mb-2">Unable to Preview Schedule</h3>
-                    <p className="text-gray-600 mb-6">
-                      The schedule PDF could not be loaded directly due to network restrictions or browser compatibility.
-                    </p>
-                    <a 
-                        href={downloadUrl} 
-                        download="Tiger-Lee-Schedule.pdf"
-                        className="inline-block bg-brand-dark text-white px-6 py-3 rounded-lg hover:bg-gray-800 transition-colors"
-                    >
-                        Download PDF Instead
-                    </a>
+            {!error && (
+              <Document
+                file={pdfUrl}
+                onLoadSuccess={onDocumentLoadSuccess}
+                onLoadError={onDocumentLoadError}
+                options={pdfOptions}
+                loading={
+                  <div className="flex flex-col items-center justify-center py-20">
+                    <Loader2 className="animate-spin text-brand-red mb-4" size={40} />
+                    <p className="text-gray-500 font-medium">Loading schedule...</p>
                   </div>
-                )}
+                }
+                className="flex flex-col gap-0 md:gap-8 w-full"
+              >
+                {Array.from(new Array(numPages), (el, index) => (
+                  <Page
+                    key={`page_${index + 1}`}
+                    pageNumber={index + 1}
+                    width={containerWidth > 0 ? (window.innerWidth < 768 ? containerWidth : Math.min(containerWidth - 64, 1000)) : 300}
+                    className="md:shadow-xl"
+                    renderTextLayer={false}
+                    renderAnnotationLayer={false}
+                  />
+                ))}
+              </Document>
+            )}
+          </div>
 
-                {!error && (
-                   <Document
-                      file={pdfUrl}
-                      onLoadSuccess={onDocumentLoadSuccess}
-                      onLoadError={onDocumentLoadError}
-                      options={pdfOptions}
-                      loading={
-                        <div className="flex flex-col items-center justify-center py-20">
-                          <Loader2 className="animate-spin text-brand-red mb-4" size={40} />
-                          <p className="text-gray-500 font-medium">Loading schedule...</p>
-                        </div>
-                      }
-                      className="flex flex-col gap-8"
-                   >
-                      {Array.from(new Array(numPages), (el, index) => (
-                        <Page 
-                          key={`page_${index + 1}`} 
-                          pageNumber={index + 1} 
-                          width={containerWidth > 0 ? Math.min(containerWidth - 64, 1000) : 300}
-                          className="shadow-xl"
-                          renderTextLayer={false}
-                          renderAnnotationLayer={false}
-                        />
-                      ))}
-                   </Document>
-                )}
-            </div>
-            
-            <p className="text-center text-sm text-gray-500 mt-4">
-               * Schedule is subject to change. Please contact us for the most up-to-date information.
-            </p>
+          <p className="text-center text-sm text-gray-500 mt-4">
+            * Schedule is subject to change. Please contact us for the most up-to-date information.
+          </p>
         </div>
       </div>
 
@@ -219,15 +219,15 @@ const SchedulePage: React.FC = () => {
       <div className="bg-brand-dark py-16 text-center relative overflow-hidden">
         <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-8 h-8 bg-white rotate-45"></div>
         <div className="container mx-auto px-4 relative z-10">
-            <span className="block text-xl md:text-2xl font-heading font-bold text-white uppercase tracking-widest mb-8">
-                Schedule a trial lesson. It'll only take a minute.
-            </span>
-            <Link 
-               to="/get-started" 
-               className="inline-block bg-brand-red text-white px-10 py-4 rounded-full font-bold text-lg hover:bg-red-700 transition-all hover:scale-105 shadow-xl shadow-red-900/20"
-            >
-               Get Started
-            </Link>
+          <span className="block text-xl md:text-2xl font-heading font-bold text-white uppercase tracking-widest mb-8">
+            Schedule a trial lesson. It'll only take a minute.
+          </span>
+          <Link
+            to="/get-started"
+            className="inline-block bg-brand-red text-white px-10 py-4 rounded-full font-bold text-lg hover:bg-red-700 transition-all hover:scale-105 shadow-xl shadow-red-900/20"
+          >
+            Get Started
+          </Link>
         </div>
       </div>
     </div>

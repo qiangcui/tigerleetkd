@@ -27,18 +27,18 @@ const Testimonials: React.FC = () => {
   return (
     <section id="testimonials" className="py-24 relative overflow-hidden">
       {/* Background Image */}
-      <div 
+      <div
         className="absolute inset-0 bg-cover bg-center bg-fixed"
-        style={{ backgroundImage: "url('https://www.tigerleestkd.com/222/wp-content/uploads/2018/04/homepage.png')" }}
+        style={{ backgroundImage: "url('/assets/images/homepage.png')" }}
       ></div>
-      
+
       {/* Dark Overlay for readability */}
       <div className="absolute inset-0 bg-black/70"></div>
 
       <div className="container mx-auto px-4 relative z-10">
         <div className="flex flex-col items-center mb-16 text-center">
-            <h2 className="font-heading text-4xl font-bold text-white">What They Say</h2>
-            <div className="w-24 h-1 bg-brand-red mx-auto mt-6 rounded-full"></div>
+          <h2 className="font-heading text-4xl font-bold text-white">What They Say</h2>
+          <div className="w-24 h-1 bg-brand-red mx-auto mt-6 rounded-full"></div>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">

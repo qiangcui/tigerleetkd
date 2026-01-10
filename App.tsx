@@ -1,7 +1,8 @@
 import React, { useEffect } from 'react';
-import { HashRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
+import ScrollToTopButton from './components/ScrollToTop';
 import HomePage from './pages/HomePage';
 import GetStartedPage from './pages/GetStartedPage';
 import AboutPage from './pages/AboutPage';
@@ -21,7 +22,15 @@ const ScrollToTop = () => {
       setTimeout(() => {
         const element = document.getElementById(hash.substring(1));
         if (element) {
-          element.scrollIntoView({ behavior: 'smooth' });
+          // Calculate offset: navbar height (~150px) + extra padding for better view
+          const offset = 120;
+          const elementPosition = element.getBoundingClientRect().top + window.pageYOffset;
+          const offsetPosition = elementPosition - offset;
+
+          window.scrollTo({
+            top: offsetPosition,
+            behavior: 'smooth'
+          });
         }
       }, 100);
     } else {
@@ -35,8 +44,9 @@ const ScrollToTop = () => {
 function App() {
   return (
     <Router>
-      <div className="font-sans text-gray-900 bg-white">
+      <div className="font-sans text-gray-900 bg-white min-h-screen overflow-x-hidden">
         <ScrollToTop />
+        <ScrollToTopButton />
         <Navbar />
         <Routes>
           <Route path="/" element={<HomePage />} />

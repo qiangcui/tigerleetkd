@@ -36,10 +36,10 @@ const FAQPage: React.FC = () => {
   return (
     <div className="pt-0 bg-white">
       {/* Page Header */}
-      <div className="relative h-[350px] w-full overflow-hidden bg-brand-dark flex items-center">
-        <div 
+      <div className="relative h-[400px] w-full overflow-hidden bg-brand-dark flex items-center">
+        <div
           className="absolute inset-0 bg-cover bg-center"
-          style={{ backgroundImage: "url('https://www.tigerleestkd.com/wp-content/uploads/2017/06/FAQ.jpg')" }}
+          style={{ backgroundImage: "url('/assets/images/FAQ.jpg')" }}
         ></div>
         <div className="absolute inset-0 bg-black/60"></div>
 
@@ -66,8 +66,8 @@ const FAQPage: React.FC = () => {
                 className="w-full flex items-center justify-between p-6 bg-white hover:bg-gray-50 transition-colors text-left focus:outline-none"
               >
                 <span className="font-bold text-lg text-gray-900 flex items-center gap-3">
-                    {openIndex === index ? <Minus size={20} className="text-brand-red shrink-0"/> : <Plus size={20} className="text-gray-400 shrink-0"/>}
-                    {faq.question}
+                  {openIndex === index ? <Minus size={20} className="text-brand-red shrink-0" /> : <Plus size={20} className="text-gray-400 shrink-0" />}
+                  {faq.question}
                 </span>
               </button>
               <AnimatePresence>
@@ -89,35 +89,35 @@ const FAQPage: React.FC = () => {
         </div>
 
         <div className="text-center mt-20">
-            <h3 className="text-2xl font-bold text-gray-900 mb-6">Have other questions? Ask us here!</h3>
-            <Link 
-               to="/#contact" 
-               className="inline-block bg-brand-red text-white px-8 py-3 rounded-full font-bold hover:bg-red-700 transition-colors shadow-lg"
-               onClick={() => {
-                 setTimeout(() => {
-                   const contactSection = document.getElementById('contact');
-                   if (contactSection) contactSection.scrollIntoView({ behavior: 'smooth' });
-                 }, 100);
-               }}
-            >
-               Contact Us
-            </Link>
+          <h3 className="text-2xl font-bold text-gray-900 mb-6">Have other questions? Ask us here!</h3>
+          <Link
+            to="/#contact"
+            className="inline-block bg-brand-red text-white px-8 py-3 rounded-full font-bold hover:bg-red-700 transition-colors shadow-lg"
+            onClick={() => {
+              setTimeout(() => {
+                const contactSection = document.getElementById('contact');
+                if (contactSection) contactSection.scrollIntoView({ behavior: 'smooth' });
+              }, 100);
+            }}
+          >
+            Contact Us
+          </Link>
         </div>
       </div>
 
-       {/* CTA Section */}
-       <div className="bg-brand-dark py-16 text-center relative overflow-hidden">
+      {/* CTA Section */}
+      <div className="bg-brand-dark py-16 text-center relative overflow-hidden">
         <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-8 h-8 bg-white rotate-45"></div>
         <div className="container mx-auto px-4 relative z-10">
-            <span className="block text-xl md:text-2xl font-heading font-bold text-white uppercase tracking-widest mb-8">
-                Schedule a trial lesson. It'll only take a minute.
-            </span>
-            <Link 
-               to="/get-started" 
-               className="inline-block bg-brand-red text-white px-10 py-4 rounded-full font-bold text-lg hover:bg-red-700 transition-all hover:scale-105 shadow-xl shadow-red-900/20"
-            >
-               Get Started
-            </Link>
+          <span className="block text-xl md:text-2xl font-heading font-bold text-white uppercase tracking-widest mb-8">
+            Schedule a trial lesson. It'll only take a minute.
+          </span>
+          <Link
+            to="/get-started"
+            className="inline-block bg-brand-red text-white px-10 py-4 rounded-full font-bold text-lg hover:bg-red-700 transition-all hover:scale-105 shadow-xl shadow-red-900/20"
+          >
+            Get Started
+          </Link>
         </div>
       </div>
     </div>

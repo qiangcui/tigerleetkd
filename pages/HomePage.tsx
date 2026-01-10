@@ -9,18 +9,18 @@ const HomePage: React.FC = () => {
   return (
     <>
       <Hero />
-      
+
       {/* Award Section */}
       <section className="py-16 bg-white text-center">
         <div className="container mx-auto px-4">
-             <img 
-                src="https://www.tigerleestkd.com/wp-content/uploads/2021/01/KakaoTalk_Photo_2021-01-25-23-30-32.jpeg" 
-                alt="Best of 2020" 
-                className="w-full max-w-lg mx-auto mb-8 rounded-lg shadow-xl"
-            />
-            <p className="text-gray-900 font-bold text-xl md:text-2xl max-w-3xl mx-auto leading-relaxed italic">
-                Tiger Lee’s World Class Tae Kwon Do has been recognized as the Best of 2020 in martial arts instruction.
-            </p>
+          <img
+            src="/assets/images/KakaoTalk_Photo_2021-01-25-23-30-32.jpeg"
+            alt="Best of 2020"
+            className="w-full max-w-lg mx-auto mb-8 rounded-lg shadow-xl"
+          />
+          <p className="text-gray-900 font-bold text-xl md:text-2xl max-w-3xl mx-auto leading-relaxed italic">
+            Tiger Lee’s World Class Tae Kwon Do has been recognized as the Best of 2020 in martial arts instruction.
+          </p>
         </div>
       </section>
 

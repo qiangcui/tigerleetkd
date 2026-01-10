@@ -8,6 +8,23 @@ const Contact: React.FC = () => {
     message: ''
   });
   const [status, setStatus] = React.useState<'idle' | 'sending' | 'success' | 'error'>('idle');
+  const [timeLeft, setTimeLeft] = React.useState(3);
+
+  React.useEffect(() => {
+    if (status === 'success') {
+      setTimeLeft(3);
+      const timer = setInterval(() => {
+        setTimeLeft((prev) => {
+          if (prev <= 1) {
+            setStatus('idle');
+            return 0;
+          }
+          return prev - 1;
+        });
+      }, 1000);
+      return () => clearInterval(timer);
+    }
+  }, [status]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setFormData(prev => ({ ...prev, [e.target.name]: e.target.value }));
@@ -34,11 +51,9 @@ const Contact: React.FC = () => {
       });
       setStatus('success');
       setFormData({ name: '', email: '', subject: '', message: '' });
-      alert("Message Sent Successfully!");
     } catch (error) {
       console.error("Error sending message:", error);
       setStatus('error');
-      alert("Failed to send message.");
     }
   };
 
@@ -129,11 +144,25 @@ const Contact: React.FC = () => {
 
               <button
                 type="submit"
-                disabled={status === 'sending'}
-                className="w-full bg-brand-dark text-white font-bold py-4 rounded-lg hover:bg-gray-800 transition-colors shadow-lg disabled:opacity-50"
+                disabled={status === 'sending' || status === 'success'}
+                className="w-full bg-brand-dark text-white font-bold py-4 rounded-lg hover:bg-gray-800 transition-colors shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {status === 'sending' ? 'Sending...' : 'Send Message'}
               </button>
+
+              {status === 'success' && (
+                <div className="mt-4 p-4 bg-green-50 border border-green-200 rounded-lg text-green-700 text-center">
+                  <p className="font-bold">Message Sent Successfully!</p>
+                  <p className="text-sm">Closing in {timeLeft}s...</p>
+                </div>
+              )}
+
+              {status === 'error' && (
+                <div className="mt-4 p-4 bg-red-50 border border-red-200 rounded-lg text-red-700 text-center">
+                  <p className="font-bold">Error Sending Message</p>
+                  <p className="text-sm">Please try again or call us.</p>
+                </div>
+              )}
             </form>
           </div>
 

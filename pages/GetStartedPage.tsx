@@ -8,11 +8,11 @@ const GetStartedPage: React.FC = () => {
       {/* Page Hero - Matching Original Site */}
       <div className="relative h-[400px] w-full overflow-hidden bg-brand-dark flex items-center">
         {/* Background Image */}
-        <div 
+        <div
           className="absolute inset-0 bg-cover bg-center"
-          style={{ backgroundImage: "url('https://www.tigerleestkd.com/wp-content/uploads/2018/04/exterior-tigerlee.jpg')" }}
+          style={{ backgroundImage: "url('/assets/images/exterior-tigerlee.jpg')" }}
         ></div>
-        
+
         {/* Overlay */}
         <div className="absolute inset-0 bg-black/50"></div>
 
