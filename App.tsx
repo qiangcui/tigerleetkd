@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { HashRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import ScrollToTopButton from './components/ScrollToTop';
@@ -43,7 +43,7 @@ const ScrollToTop = () => {
 
 function App() {
   return (
-    <Router future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
+    <Router basename="/tigerleetkd" future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
       <div className="font-sans text-gray-900 bg-white min-h-screen overflow-x-hidden">
         <ScrollToTop />
         <ScrollToTopButton />
