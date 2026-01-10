@@ -4,34 +4,36 @@ import { Program } from '../types';
 import { ChevronRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+
 const programsData: Program[] = [
   {
     id: 'little-tigers',
     title: 'Little Tigers',
     ageGroup: '(4-5 yr olds)',
     description: 'Working through a martial art and the belt ranking system gives kids measurable goals to follow that are realistic to attain. The sense of accomplishment a child feels by mastering a new technique or graduating to a new belt follows him everywhere he goes!',
-    image: '/assets/images/little-tigers-class.jpg'
+    image: `${base}/assets/images/little-tigers-class.jpg`
   },
   {
     id: 'children',
     title: "Children's Class",
     ageGroup: '(6-12 yr olds)',
     description: 'Working through a martial art and the belt ranking system gives kids measurable goals to follow that are realistic to attain. The sense of accomplishment a child feels by mastering a new technique or graduating to a new belt follows him everywhere he goes!',
-    image: '/assets/images/children-class.jpg'
+    image: `${base}/assets/images/children-class.jpg`
   },
   {
     id: 'family',
     title: 'Family Class',
     ageGroup: '(Kids & Adult)',
     description: "At Tiger Lee's , we teach families, as well as individuals. The change in a family's demeanor after a few months is amazing. It becomes a source of fitness and team building with a bit of friendly competition, too. Many families will find that they have something in common and will share their time on an off the mat.",
-    image: '/assets/images/family-class-large.jpg'
+    image: `${base}/assets/images/family-class-large.jpg`
   },
   {
     id: 'adult',
     title: 'Adult Class',
     ageGroup: '(13 yr olds and up)',
     description: 'Do you need more energy, a boost in self-confidence and a great way to reduce stress? Then Tae Kwon Do may be the perfect fitness program for you!',
-    image: '/assets/images/adult-classes.jpg'
+    image: `${base}/assets/images/adult-classes.jpg`
   }
 ];
 

@@ -3,10 +3,10 @@ import { motion } from 'framer-motion';
 import { CheckCircle, Calendar, User, Phone, Mail, Gift, Cake, ChevronRight } from 'lucide-react';
 
 const galleryImages = [
-    "/assets/images/birthday3.jpg",
-    "/assets/images/birthday2.jpg",
-    "/assets/images/birthday1.jpg",
-    "/assets/images/birthday5.jpg"
+    import.meta.env.BASE_URL + "assets/images/birthday3.jpg",
+    import.meta.env.BASE_URL + "assets/images/birthday2.jpg",
+    import.meta.env.BASE_URL + "assets/images/birthday1.jpg",
+    import.meta.env.BASE_URL + "assets/images/birthday5.jpg"
 ];
 
 const BirthdayPartyPage: React.FC = () => {
@@ -78,7 +78,7 @@ Phone: ${formData.phone}`
             <div className="relative h-[450px] w-full overflow-hidden bg-brand-dark flex items-center">
                 <div
                     className="absolute inset-0 bg-cover bg-center"
-                    style={{ backgroundImage: "url('/assets/images/birthday-blur-cake-40183.jpg')" }}
+                    style={{ backgroundImage: `url(${import.meta.env.BASE_URL}assets/images/birthday-blur-cake-40183.jpg)` }}
                 ></div>
                 <div className="absolute inset-0 bg-black/50"></div>
 
@@ -133,7 +133,7 @@ Phone: ${formData.phone}`
                     >
                         <div className="relative rounded-2xl overflow-hidden shadow-2xl transform rotate-2 hover:rotate-0 transition-all duration-500">
                             <img
-                                src="/assets/images/birthday4.jpg"
+                                src={import.meta.env.BASE_URL + "assets/images/birthday4.jpg"}
                                 alt="Board Breaking Birthday"
                                 className="w-full h-auto"
                             />

@@ -1,146 +1,117 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Link } from 'react-router-dom';
 import { CheckCircle } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 const ProgramSection: React.FC<{
   id: string;
   title: string;
   subtitle?: string;
-  content: React.ReactNode;
   image: string;
+  content: React.ReactNode;
   isReversed?: boolean;
   titleClass?: string;
-  cleanImage?: boolean;
   fullBleed?: boolean;
-}> = ({ id, title, subtitle, content, image, isReversed = false, titleClass = "text-brand-red", cleanImage = false, fullBleed = false }) => {
-
-  // Full Bleed Layout (Image takes 50% width, full height, no padding)
-  if (fullBleed) {
-    return (
-      <div id={id} className={`relative overflow-hidden ${isReversed ? 'bg-gray-50' : 'bg-white'}`}>
-        {/* Desktop Full Height Image (Absolute Positioned) */}
-        <div className={`hidden lg:block absolute inset-y-0 ${isReversed ? 'left-0' : 'right-0'} w-1/2`}>
-          <img src={image} alt={title} className="w-full h-full object-cover" />
-        </div>
-
-        <div className="container mx-auto px-4">
-          <div className={`relative z-10 flex flex-col ${isReversed ? 'lg:flex-row-reverse' : 'lg:flex-row'} items-center`}>
-
-            {/* Content Side */}
-            <motion.div
-              className={`lg:w-1/2 py-20 ${isReversed ? 'lg:pl-16' : 'lg:pr-16'}`}
-              initial={{ opacity: 0, x: isReversed ? 30 : -30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
-            >
-              <h2 className={`font-heading text-4xl md:text-5xl font-bold mb-4 ${titleClass}`}>{title}</h2>
-              {subtitle && (
-                <h4 className="font-heading text-xl md:text-2xl font-bold text-brand-dark mb-6">{subtitle}</h4>
-              )}
-              <div className="prose prose-lg text-gray-600 mb-8">
-                {content}
-              </div>
-              <Link
-                to="/get-started"
-                className="inline-block bg-brand-red text-white px-8 py-3 rounded-full font-bold hover:bg-red-700 transition-colors shadow-lg"
-              >
-                SIGN UP
-              </Link>
-            </motion.div>
-
-            {/* Mobile/Tablet Image (Visible only below lg) */}
-            <motion.div
-              className="lg:hidden w-full mb-10"
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-            >
-              <img src={image} alt={title} className="w-full h-auto object-cover shadow-lg" />
-            </motion.div>
-
-            {/* Invisible Spacer for Desktop layout to maintain grid structure and height */}
-            <div className="hidden lg:block lg:w-1/2 min-h-[800px]"></div>
-          </div>
-        </div>
-      </div>
-    );
-  }
-
-  // Standard Layout
+  cleanImage?: boolean;
+}> = ({ id, title, subtitle, image, content, isReversed, titleClass = '', fullBleed = false, cleanImage = false }) => {
   return (
-    <div id={id} className={`py-20 ${isReversed ? 'bg-gray-50' : 'bg-white'}`}>
-      <div className="container mx-auto px-4">
-        <div className={`flex flex-col ${isReversed ? 'lg:flex-row-reverse' : 'lg:flex-row'} gap-12 items-center`}>
+    <section id={id} className={`overflow-hidden ${fullBleed ? 'bg-white' : 'py-20 bg-gray-50'}`}>
+      <div className={fullBleed ? 'w-full' : 'container mx-auto px-4'}>
+        <div className={`flex flex-col lg:flex-row items-stretch ${isReversed ? 'lg:flex-row-reverse' : ''}`}>
 
-          {/* Content Side */}
-          <motion.div
-            className="lg:w-1/2"
-            initial={{ opacity: 0, x: isReversed ? 30 : -30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-          >
-            <h2 className={`font-heading text-4xl md:text-5xl font-bold mb-4 ${titleClass}`}>{title}</h2>
-            {subtitle && (
-              <h4 className="font-heading text-xl md:text-2xl font-bold text-brand-dark mb-6">{subtitle}</h4>
-            )}
-            <div className="prose prose-lg text-gray-600 mb-8">
-              {content}
-            </div>
-            <Link
-              to="/get-started"
-              className="inline-block bg-brand-red text-white px-8 py-3 rounded-full font-bold hover:bg-red-700 transition-colors shadow-lg"
-            >
-              SIGN UP
-            </Link>
-          </motion.div>
+          {fullBleed ? (
+            <>
+              {/* Image Side - Full Bleed */}
+              <motion.div
+                className="lg:w-1/2 min-h-[400px] lg:min-h-0 relative"
+                initial={{ opacity: 0, x: isReversed ? -30 : 30 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6 }}
+              >
+                <img src={image} alt={title} className="absolute inset-0 w-full h-full object-cover" />
+              </motion.div>
 
-          {/* Image Side */}
-          <motion.div
-            className="lg:w-1/2 w-full"
-            initial={{ opacity: 0, x: isReversed ? -30 : 30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-          >
-            {cleanImage ? (
-              /* Clean Image Style (No shadow/radius/zoom) */
-              <div className="relative w-full">
-                <img
-                  src={image}
-                  alt={title}
-                  className="w-full h-auto object-cover"
-                />
-              </div>
-            ) : (
-              /* Standard Modern Style */
-              <div className="relative rounded-xl overflow-hidden shadow-2xl group">
-                <div className="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors duration-300"></div>
-                <img
-                  src={image}
-                  alt={title}
-                  className="w-full h-auto object-cover transform group-hover:scale-105 transition-transform duration-700"
-                />
-              </div>
-            )}
-          </motion.div>
+              {/* Content Side */}
+              <motion.div
+                className={`lg:w-1/2 py-20 ${isReversed ? 'lg:pl-16' : 'lg:pr-16'} px-6 md:px-12`}
+                initial={{ opacity: 0, x: isReversed ? 30 : -30 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6 }}
+              >
+                <h2 className={`font-heading text-4xl md:text-5xl font-bold mb-4 ${titleClass}`}>{title}</h2>
+                {subtitle && (
+                  <h4 className="font-heading text-xl md:text-2xl font-bold text-brand-dark mb-6">{subtitle}</h4>
+                )}
+                <div className="prose prose-lg text-gray-600 mb-8">
+                  {content}
+                </div>
+                <Link
+                  to="/get-started"
+                  className="inline-block bg-brand-red text-white px-8 py-3 rounded-full font-bold hover:bg-red-700 transition-colors shadow-lg"
+                >
+                  SIGN UP
+                </Link>
+              </motion.div>
+            </>
+          ) : (
+            <>
+              {/* Content Side */}
+              <motion.div
+                className="lg:w-1/2"
+                initial={{ opacity: 0, x: isReversed ? 30 : -30 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6 }}
+              >
+                <h2 className={`font-heading text-4xl md:text-5xl font-bold mb-4 ${titleClass}`}>{title}</h2>
+                {subtitle && (
+                  <h4 className="font-heading text-xl md:text-2xl font-bold text-brand-dark mb-6">{subtitle}</h4>
+                )}
+                <div className="prose prose-lg text-gray-600 mb-8">
+                  {content}
+                </div>
+              </motion.div>
+
+              {/* Image Side */}
+              <motion.div
+                className="lg:w-1/2 w-full"
+                initial={{ opacity: 0, x: isReversed ? -30 : 30 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6 }}
+              >
+                {cleanImage ? (
+                  /* Clean Image Style (No shadow/radius/zoom) */
+                  <img src={image} alt={title} className="w-full h-auto object-cover" />
+                ) : (
+                  /* Styled Image (Shadow, radius, hover zoom) */
+                  <div className="relative group overflow-hidden rounded-2xl shadow-2xl">
+                    <img src={image} alt={title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent"></div>
+                  </div>
+                )}
+              </motion.div>
+            </>
+          )}
 
         </div>
       </div>
-    </div>
+    </section>
   );
 };
 
 const ProgramsPage: React.FC = () => {
+  const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+
   return (
     <div className="pt-0 bg-white">
       {/* Page Header */}
       <div className="relative h-[400px] w-full overflow-hidden bg-brand-dark flex items-center">
         <div
           className="absolute inset-0 bg-cover bg-center"
-          style={{ backgroundImage: "url('/assets/images/exterior-tigerlee.jpg')" }}
+          style={{ backgroundImage: `url(${base}/assets/images/exterior-tigerlee.jpg)` }}
         ></div>
         <div className="absolute inset-0 bg-black/60"></div>
 
@@ -164,7 +135,7 @@ const ProgramsPage: React.FC = () => {
         title="Little Tigers"
         titleClass="text-[#3452ff]"
         fullBleed={true}
-        image="/assets/images/little-tigers.jpg"
+        image={`${base}/assets/images/little-tigers.jpg`}
         content={
           <>
             <p className="mb-4">
@@ -201,7 +172,7 @@ const ProgramsPage: React.FC = () => {
         id="children"
         title="Children's Classes"
         subtitle="Give your child the opportunity to learn something fun and challenging!"
-        image="/assets/images/children.jpg"
+        image={`${base}/assets/images/children.jpg`}
         isReversed={true}
         fullBleed={true}
         content={
@@ -233,7 +204,7 @@ const ProgramsPage: React.FC = () => {
         id="family"
         title="Family Classes"
         subtitle="A family that kicks together sticks together!"
-        image="/assets/images/family.jpg"
+        image={`${base}/assets/images/family.jpg`}
         fullBleed={true}
         content={
           <>
@@ -268,7 +239,7 @@ const ProgramsPage: React.FC = () => {
         id="adult"
         title="Adult Classes"
         subtitle="Tae Kwon Do offers many benefits for adults!"
-        image="/assets/images/adults.jpg"
+        image={`${base}/assets/images/adults.jpg`}
         isReversed={true}
         fullBleed={true}
         content={

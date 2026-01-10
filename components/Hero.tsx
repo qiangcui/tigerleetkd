@@ -4,13 +4,14 @@ import { Play, X } from 'lucide-react';
 
 const Hero: React.FC = () => {
   const [isVideoOpen, setIsVideoOpen] = useState(false);
+  const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
   return (
     <div className="relative min-h-[600px] h-screen w-full overflow-hidden bg-brand-dark">
       {/* Background Image */}
       <div
         className="absolute inset-0 bg-cover bg-center"
-        style={{ backgroundImage: "url('/assets/images/children-sparring.jpg')" }}
+        style={{ backgroundImage: `url('${base}/assets/images/children-sparring.jpg')` }}
       ></div>
 
       {/* Overlay */}

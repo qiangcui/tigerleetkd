@@ -6,6 +6,8 @@ import Testimonials from '../components/Testimonials';
 import Contact from '../components/Contact';
 
 const HomePage: React.FC = () => {
+  const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+
   return (
     <>
       <Hero />
@@ -14,7 +16,7 @@ const HomePage: React.FC = () => {
       <section className="py-16 bg-white text-center">
         <div className="container mx-auto px-4">
           <img
-            src="/assets/images/KakaoTalk_Photo_2021-01-25-23-30-32.jpeg"
+            src={`${base}/assets/images/KakaoTalk_Photo_2021-01-25-23-30-32.jpeg`}
             alt="Best of 2020"
             className="w-full max-w-lg mx-auto mb-8 rounded-lg shadow-xl"
           />

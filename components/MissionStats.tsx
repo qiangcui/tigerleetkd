@@ -10,6 +10,8 @@ const stats: Stat[] = [
 ];
 
 const MissionStats: React.FC = () => {
+  const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+
   return (
     <section id="mission" className="pt-10 pb-20 md:py-20 bg-white relative overflow-hidden">
       <div className="container mx-auto px-4 relative z-10">
@@ -45,7 +47,7 @@ const MissionStats: React.FC = () => {
           <div className="lg:w-1/2 w-full">
             <div className="relative mb-12 transform hover:scale-[1.02] transition-transform duration-500">
               <img
-                src="/assets/images/home_banner5.png"
+                src={`${base}/assets/images/home_banner5.png`}
                 alt="Martial Arts Group"
                 className="rounded-xl shadow-2xl w-full object-cover"
               />

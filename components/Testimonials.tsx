@@ -24,12 +24,14 @@ const testimonials: Testimonial[] = [
 ];
 
 const Testimonials: React.FC = () => {
+  const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+
   return (
     <section id="testimonials" className="py-24 relative overflow-hidden">
       {/* Background Image */}
       <div
         className="absolute inset-0 bg-cover bg-center bg-fixed"
-        style={{ backgroundImage: "url('/assets/images/homepage.png')" }}
+        style={{ backgroundImage: `url('${base}/assets/images/homepage.png')` }}
       ></div>
 
       {/* Dark Overlay for readability */}
