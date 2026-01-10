@@ -1,11 +1,52 @@
 import React from 'react';
 
 const Contact: React.FC = () => {
+  const [formData, setFormData] = React.useState({
+    name: '',
+    email: '',
+    subject: '',
+    message: ''
+  });
+  const [status, setStatus] = React.useState<'idle' | 'sending' | 'success' | 'error'>('idle');
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setFormData(prev => ({ ...prev, [e.target.name]: e.target.value }));
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault(); // Prevent default form submission
+    setStatus('sending');
+
+    // REPLACE THIS WITH YOUR GOOGLE APPS SCRIPT WEB APP URL
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbz-6Kx4pOiubQymxMhnaAE9wuWW0ifAB665azIrVPbhhal0oOdPvavDpbt3xLGL68rl/exec";
+
+    if (SCRIPT_URL.includes("YOUR_SCRIPT_ID_HERE")) {
+      alert("Please configure the Google Apps Script URL in the code (components/Contact.tsx).");
+      setStatus('error');
+      return;
+    }
+
+    try {
+      await fetch(SCRIPT_URL, {
+        method: "POST",
+        body: new URLSearchParams({ ...formData } as any),
+        mode: 'no-cors'
+      });
+      setStatus('success');
+      setFormData({ name: '', email: '', subject: '', message: '' });
+      alert("Message Sent Successfully!");
+    } catch (error) {
+      console.error("Error sending message:", error);
+      setStatus('error');
+      alert("Failed to send message.");
+    }
+  };
+
   return (
     <section id="contact" className="py-20 bg-white text-gray-900">
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-          
+
           {/* Info Side */}
           <div className="flex flex-col h-full">
             <div className="mb-8">
@@ -15,48 +56,83 @@ const Contact: React.FC = () => {
 
             {/* Google Map - Expanded */}
             <div className="w-full flex-grow bg-gray-100 rounded-lg overflow-hidden relative min-h-[400px] shadow-sm border border-gray-200">
-               <iframe 
-                 width="100%" 
-                 height="100%" 
-                 frameBorder="0" 
-                 title="Tiger Lee's World Class Tae Kwon Do Location"
-                 scrolling="no" 
-                 marginHeight={0} 
-                 marginWidth={0} 
-                 src="https://maps.google.com/maps?q=Tiger%20Lee's%20World%20Class%20Tae%20Kwon%20Do%20Parker%20CO&t=&z=13&ie=UTF8&iwloc=&output=embed"
-                 className="absolute inset-0 w-full h-full border-0"
-                 allowFullScreen
-               ></iframe>
+              <iframe
+                width="100%"
+                height="100%"
+                frameBorder="0"
+                title="Tiger Lee's World Class Tae Kwon Do Location"
+                scrolling="no"
+                marginHeight={0}
+                marginWidth={0}
+                src="https://maps.google.com/maps?q=Tiger%20Lee's%20World%20Class%20Tae%20Kwon%20Do%20Parker%20CO&t=&z=13&ie=UTF8&iwloc=&output=embed"
+                className="absolute inset-0 w-full h-full border-0"
+                allowFullScreen
+              ></iframe>
             </div>
           </div>
 
           {/* Form Side */}
           <div className="bg-white rounded-xl p-8 text-gray-800 shadow-2xl border border-gray-100">
             <h3 className="text-2xl font-bold mb-6 text-gray-900">Send a Message</h3>
-            <form className="space-y-4">
+            <form className="space-y-4" onSubmit={handleSubmit}>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">Name</label>
-                  <input type="text" className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:ring-2 focus:ring-brand-red focus:border-transparent outline-none transition-all" placeholder="Your Name" />
+                  <input
+                    type="text"
+                    name="name"
+                    required
+                    value={formData.name}
+                    onChange={handleChange}
+                    className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:ring-2 focus:ring-brand-red focus:border-transparent outline-none transition-all"
+                    placeholder="Your Name"
+                  />
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">Email</label>
-                  <input type="email" className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:ring-2 focus:ring-brand-red focus:border-transparent outline-none transition-all" placeholder="Your Email" />
+                  <input
+                    type="email"
+                    name="email"
+                    required
+                    value={formData.email}
+                    onChange={handleChange}
+                    className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:ring-2 focus:ring-brand-red focus:border-transparent outline-none transition-all"
+                    placeholder="Your Email"
+                  />
                 </div>
               </div>
-              
+
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">Subject</label>
-                <input type="text" className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:ring-2 focus:ring-brand-red focus:border-transparent outline-none transition-all" placeholder="How can we help?" />
+                <input
+                  type="text"
+                  name="subject"
+                  value={formData.subject}
+                  onChange={handleChange}
+                  className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:ring-2 focus:ring-brand-red focus:border-transparent outline-none transition-all"
+                  placeholder="How can we help?"
+                />
               </div>
 
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">Message</label>
-                <textarea rows={6} className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:ring-2 focus:ring-brand-red focus:border-transparent outline-none transition-all" placeholder="Tell us more..."></textarea>
+                <textarea
+                  name="message"
+                  required
+                  rows={6}
+                  value={formData.message}
+                  onChange={handleChange}
+                  className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:ring-2 focus:ring-brand-red focus:border-transparent outline-none transition-all"
+                  placeholder="Tell us more..."
+                ></textarea>
               </div>
 
-              <button type="button" className="w-full bg-brand-dark text-white font-bold py-4 rounded-lg hover:bg-gray-800 transition-colors shadow-lg">
-                Send Message
+              <button
+                type="submit"
+                disabled={status === 'sending'}
+                className="w-full bg-brand-dark text-white font-bold py-4 rounded-lg hover:bg-gray-800 transition-colors shadow-lg disabled:opacity-50"
+              >
+                {status === 'sending' ? 'Sending...' : 'Send Message'}
               </button>
             </form>
           </div>
