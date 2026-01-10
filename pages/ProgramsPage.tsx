@@ -140,7 +140,7 @@ const ProgramsPage: React.FC = () => {
       <div className="relative h-[400px] w-full overflow-hidden bg-brand-dark flex items-center">
         <div
           className="absolute inset-0 bg-cover bg-center"
-          style={{ backgroundImage: "url('/assets/images/exterior-tigerlee.jpg')" }}
+          style={{ backgroundImage: "url('assets/images/exterior-tigerlee.jpg')" }}
         ></div>
         <div className="absolute inset-0 bg-black/60"></div>
 
@@ -164,7 +164,7 @@ const ProgramsPage: React.FC = () => {
         title="Little Tigers"
         titleClass="text-[#3452ff]"
         fullBleed={true}
-        image="/assets/images/little-tigers.jpg"
+        image="assets/images/little-tigers.jpg"
         content={
           <>
             <p className="mb-4">
@@ -201,7 +201,7 @@ const ProgramsPage: React.FC = () => {
         id="children"
         title="Children's Classes"
         subtitle="Give your child the opportunity to learn something fun and challenging!"
-        image="/assets/images/children.jpg"
+        image="assets/images/children.jpg"
         isReversed={true}
         fullBleed={true}
         content={
@@ -233,7 +233,7 @@ const ProgramsPage: React.FC = () => {
         id="family"
         title="Family Classes"
         subtitle="A family that kicks together sticks together!"
-        image="/assets/images/family.jpg"
+        image="assets/images/family.jpg"
         fullBleed={true}
         content={
           <>
@@ -268,7 +268,7 @@ const ProgramsPage: React.FC = () => {
         id="adult"
         title="Adult Classes"
         subtitle="Tae Kwon Do offers many benefits for adults!"
-        image="/assets/images/adults.jpg"
+        image="assets/images/adults.jpg"
         isReversed={true}
         fullBleed={true}
         content={

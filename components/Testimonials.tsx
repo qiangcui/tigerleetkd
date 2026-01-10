@@ -29,7 +29,7 @@ const Testimonials: React.FC = () => {
       {/* Background Image */}
       <div
         className="absolute inset-0 bg-cover bg-center bg-fixed"
-        style={{ backgroundImage: "url('/assets/images/homepage.png')" }}
+        style={{ backgroundImage: "url('assets/images/homepage.png')" }}
       ></div>
 
       {/* Dark Overlay for readability */}

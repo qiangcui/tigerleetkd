@@ -39,7 +39,7 @@ const FAQPage: React.FC = () => {
       <div className="relative h-[400px] w-full overflow-hidden bg-brand-dark flex items-center">
         <div
           className="absolute inset-0 bg-cover bg-center"
-          style={{ backgroundImage: "url('/assets/images/FAQ.jpg')" }}
+          style={{ backgroundImage: "url('assets/images/FAQ.jpg')" }}
         ></div>
         <div className="absolute inset-0 bg-black/60"></div>
 

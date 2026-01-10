@@ -10,7 +10,7 @@ const GetStartedPage: React.FC = () => {
         {/* Background Image */}
         <div
           className="absolute inset-0 bg-cover bg-center"
-          style={{ backgroundImage: "url('/assets/images/exterior-tigerlee.jpg')" }}
+          style={{ backgroundImage: "url('assets/images/exterior-tigerlee.jpg')" }}
         ></div>
 
         {/* Overlay */}

@@ -55,7 +55,7 @@ const EducationPage: React.FC = () => {
               ></iframe>
             </div>
             <img
-              src="/assets/images/tenets1.png"
+              src="assets/images/tenets1.png"
               alt="Tenets of Tae Kwon Do"
               className="w-full h-auto rounded-lg shadow-md"
             />
@@ -71,7 +71,7 @@ const EducationPage: React.FC = () => {
         <div className="space-y-6">
           <div className="float-right ml-6 mb-4 w-1/3">
             <img
-              src="/assets/images/fitness-249x300.png"
+              src="assets/images/fitness-249x300.png"
               alt="Physical Fitness"
               className="w-full h-auto rounded-lg shadow-md"
             />
@@ -99,7 +99,7 @@ const EducationPage: React.FC = () => {
         <div className="flex flex-col md:flex-row gap-8">
           <div className="md:w-1/3">
             <img
-              src="/assets/images/focus-161x300.png"
+              src="assets/images/focus-161x300.png"
               alt="Improved Focus"
               className="w-full h-auto rounded-lg shadow-md max-w-[200px] mx-auto md:mx-0"
             />
@@ -124,7 +124,7 @@ const EducationPage: React.FC = () => {
         <div className="space-y-6">
           <div className="float-right ml-6 mb-4 w-1/3 max-w-[250px]">
             <img
-              src="/assets/images/stress.png"
+              src="assets/images/stress.png"
               alt="Control Stress"
               className="w-full h-auto rounded-lg shadow-md"
             />
@@ -149,7 +149,7 @@ const EducationPage: React.FC = () => {
         <div className="space-y-6">
           <div className="float-right ml-6 mb-4 w-1/3 max-w-[250px]">
             <img
-              src="/assets/images/self-defense-282x300.png"
+              src="assets/images/self-defense-282x300.png"
               alt="Self Defense"
               className="w-full h-auto rounded-lg shadow-md"
             />
@@ -176,7 +176,7 @@ const EducationPage: React.FC = () => {
         <div className="space-y-6">
           <div className="float-right ml-6 mb-4 w-1/3 max-w-[200px]">
             <img
-              src="/assets/images/bully.png"
+              src="assets/images/bully.png"
               alt="Stop Bullying"
               className="w-full h-auto rounded-lg shadow-md"
             />
@@ -207,7 +207,7 @@ const EducationPage: React.FC = () => {
         <div className="space-y-6">
           <div className="float-right ml-6 mb-4 w-1/3 max-w-[200px]">
             <img
-              src="/assets/images/tkd_vs_Karate-169x300.png"
+              src="assets/images/tkd_vs_Karate-169x300.png"
               alt="TKD vs Karate"
               className="w-full h-auto rounded-lg shadow-md"
             />
@@ -269,7 +269,7 @@ const EducationPage: React.FC = () => {
       content: (
         <div className="w-full">
           <audio controls className="w-full">
-            <source src="/assets/audio/basicmovement-1.mp3" type="audio/mpeg" />
+            <source src="assets/audio/basicmovement-1.mp3" type="audio/mpeg" />
             Your browser does not support the audio element.
           </audio>
         </div>
@@ -282,7 +282,7 @@ const EducationPage: React.FC = () => {
       content: (
         <div className="w-full">
           <audio controls className="w-full">
-            <source src="/assets/audio/breathing_form.mp3" type="audio/mpeg" />
+            <source src="assets/audio/breathing_form.mp3" type="audio/mpeg" />
             Your browser does not support the audio element.
           </audio>
         </div>
@@ -296,7 +296,7 @@ const EducationPage: React.FC = () => {
       <div className="relative h-[400px] w-full overflow-hidden bg-brand-dark flex items-center">
         <div
           className="absolute inset-0 bg-cover bg-center"
-          style={{ backgroundImage: "url('/assets/images/exterior-tigerlee.jpg')" }}
+          style={{ backgroundImage: "url('assets/images/exterior-tigerlee.jpg')" }}
         ></div>
         <div className="absolute inset-0 bg-black/60"></div>
 

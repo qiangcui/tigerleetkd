@@ -1,0 +1,30 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", "sans-serif";
+  --font-heading: "Oswald", "sans-serif";
+  --color-brand-red: #D32F2F;
+  --color-brand-dark: #111827;
+  --color-brand-gray: #F3F4F6;
+}
+
+@layer base {
+  html, body {
+    overflow-x: hidden;
+    scroll-behavior: smooth;
+  }
+}
+
+/* PDF Styles */
+.react-pdf__Page__canvas {
+  margin: 0 auto;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  max-width: 100%;
+  height: auto !important;
+}
+
+.react-pdf__Page__textContent, 
+.react-pdf__Page__annotations {
+  display: none !important;
+}

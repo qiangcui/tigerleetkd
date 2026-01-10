@@ -14,7 +14,7 @@ const pdfOptions = {
 };
 
 const SchedulePage: React.FC = () => {
-  const originalPdfUrl = "/assets/pdf/Tiger-Lees-Class-Schedule-2025.pdf";
+  const originalPdfUrl = "assets/pdf/Tiger-Lees-Class-Schedule-2025.pdf";
   // Use a CORS proxy for the default viewer URL to allow PDF.js to fetch the bytes
   const proxiedPdfUrl = originalPdfUrl;
 
@@ -124,7 +124,7 @@ const SchedulePage: React.FC = () => {
       <div className="relative h-[400px] w-full overflow-hidden bg-brand-dark flex items-center">
         <div
           className="absolute inset-0 bg-cover bg-center"
-          style={{ backgroundImage: "url('/assets/images/exterior-tigerlee.jpg')" }}
+          style={{ backgroundImage: "url('assets/images/exterior-tigerlee.jpg')" }}
         ></div>
         <div className="absolute inset-0 bg-black/60"></div>
 

@@ -43,7 +43,7 @@ const ScrollToTop = () => {
 
 function App() {
   return (
-    <Router>
+    <Router future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
       <div className="font-sans text-gray-900 bg-white min-h-screen overflow-x-hidden">
         <ScrollToTop />
         <ScrollToTopButton />
