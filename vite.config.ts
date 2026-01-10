@@ -23,6 +23,6 @@ export default defineConfig(({ mode }) => {
         '@': path.resolve(__dirname, '.'),
       }
     },
-    base: '/tigerleetkd/'
+    base: process.env.GITHUB_ACTIONS === 'true' ? '/tigerleetkd/' : '/'
   };
 });

@@ -14,7 +14,7 @@ const HomePage: React.FC = () => {
       <section className="py-16 bg-white text-center">
         <div className="container mx-auto px-4">
           <img
-            src="/tigerleetkd/assets/images/KakaoTalk_Photo_2021-01-25-23-30-32.jpeg"
+            src="/assets/images/KakaoTalk_Photo_2021-01-25-23-30-32.jpeg"
             alt="Best of 2020"
             className="w-full max-w-lg mx-auto mb-8 rounded-lg shadow-xl"
           />

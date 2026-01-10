@@ -20,25 +20,25 @@ const programLinks = [
   {
     label: 'Little Tigers',
     href: '/programs#little-tigers',
-    image: '/tigerleetkd/assets/images/little-tigers.jpg',
+    image: '/assets/images/little-tigers.jpg',
     age: 'Ages 4-5'
   },
   {
     label: "Children's Class",
     href: '/programs#children',
-    image: '/tigerleetkd/assets/images/children.jpg',
+    image: '/assets/images/children.jpg',
     age: 'Ages 6-12'
   },
   {
     label: 'Family Class',
     href: '/programs#family',
-    image: '/tigerleetkd/assets/images/family.jpg',
+    image: '/assets/images/family.jpg',
     age: 'All Ages'
   },
   {
     label: 'Adult Class',
     href: '/programs#adult',
-    image: '/tigerleetkd/assets/images/adults.jpg',
+    image: '/assets/images/adults.jpg',
     age: 'Ages 13+'
   },
 ];
@@ -88,7 +88,7 @@ const Navbar: React.FC = () => {
           <div className="flex items-center">
             <Link to="/">
               <img
-                src="/tigerleetkd/assets/images/tiger-lees-logo.png"
+                src="/assets/images/tiger-lees-logo.png"
                 alt="Tiger Lee's Logo"
                 className="h-16 sm:h-20 md:h-28 w-auto transition-all duration-300 object-contain"
               />
@@ -152,7 +152,7 @@ const Navbar: React.FC = () => {
                             {/* Background Image */}
                             <div
                               className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105"
-                              style={{ backgroundImage: "url('/tigerleetkd/assets/images/birthday-blur-cake-40183.jpg')" }}
+                              style={{ backgroundImage: "url('/assets/images/birthday-blur-cake-40183.jpg')" }}
                             />
                             {/* Overlay */}
                             <div className="absolute inset-0 bg-gradient-to-r from-brand-dark/90 to-brand-dark/40 group-hover:to-brand-red/40 transition-colors duration-300" />

@@ -45,7 +45,7 @@ const MissionStats: React.FC = () => {
           <div className="lg:w-1/2 w-full">
             <div className="relative mb-12 transform hover:scale-[1.02] transition-transform duration-500">
               <img
-                src="/tigerleetkd/assets/images/home_banner5.png"
+                src="/assets/images/home_banner5.png"
                 alt="Martial Arts Group"
                 className="rounded-xl shadow-2xl w-full object-cover"
               />

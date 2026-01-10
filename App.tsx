@@ -42,8 +42,10 @@ const ScrollToTop = () => {
 };
 
 function App() {
+  const basename = import.meta.env.BASE_URL;
+
   return (
-    <Router basename="/tigerleetkd" future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
+    <Router basename={basename} future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
       <div className="font-sans text-gray-900 bg-white min-h-screen overflow-x-hidden">
         <ScrollToTop />
         <ScrollToTopButton />

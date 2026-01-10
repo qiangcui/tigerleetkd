@@ -4,10 +4,10 @@ import { Link } from 'react-router-dom';
 
 const AboutPage: React.FC = () => {
     const affiliations = [
-        { name: 'Kukkiwon', src: '/tigerleetkd/assets/images/kukkiwon-copy.jpg' },
-        { name: 'Yong-In University', src: '/tigerleetkd/assets/images/yongin.jpg' },
-        { name: 'KTA', src: '/tigerleetkd/assets/images/KTA_Redlogo7.png' },
-        { name: 'WTF', src: '/tigerleetkd/assets/images/WTF_Logo.png' },
+        { name: 'Kukkiwon', src: '/assets/images/kukkiwon-copy.jpg' },
+        { name: 'Yong-In University', src: '/assets/images/yongin.jpg' },
+        { name: 'KTA', src: '/assets/images/KTA_Redlogo7.png' },
+        { name: 'WTF', src: '/assets/images/WTF_Logo.png' },
     ];
 
     return (
@@ -17,7 +17,7 @@ const AboutPage: React.FC = () => {
                 {/* Reuse exterior image for consistency */}
                 <div
                     className="absolute inset-0 bg-cover bg-center"
-                    style={{ backgroundImage: "url('/tigerleetkd/assets/images/exterior-tigerlee.jpg')" }}
+                    style={{ backgroundImage: "url('/assets/images/exterior-tigerlee.jpg')" }}
                 ></div>
 
                 {/* Overlay */}
@@ -49,7 +49,7 @@ const AboutPage: React.FC = () => {
                         viewport={{ once: true }}
                     >
                         <img
-                            src="/tigerleetkd/assets/images/Master_Lee_Profile.png"
+                            src="/assets/images/Master_Lee_Profile.png"
                             alt="Master Seungbeom Lee"
                             className="w-full h-auto max-w-[240px] md:max-w-[360px] mx-auto"
                         />
@@ -140,7 +140,7 @@ const AboutPage: React.FC = () => {
                         viewport={{ once: true }}
                     >
                         <img
-                            src="/tigerleetkd/assets/images/Lee_Family.png"
+                            src="/assets/images/Lee_Family.png"
                             alt="Lee Family"
                             className="w-full h-auto max-w-[240px] md:max-w-[360px] mx-auto lg:mx-0"
                         />
