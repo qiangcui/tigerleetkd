@@ -13,6 +13,7 @@ import BirthdayPartyPage from './pages/BirthdayPartyPage';
 import FAQPage from './pages/FAQPage';
 import EducationPage from './pages/EducationPage';
 import ContactPage from './pages/ContactPage';
+import AdminPage from './pages/AdminPage';
 
 // Component to scroll to top on route change or handle hash scrolling
 const ScrollToTop = () => {
@@ -61,6 +62,7 @@ function App() {
           <Route path="/faq" element={<FAQPage />} />
           <Route path="/education" element={<EducationPage />} />
           <Route path="/contact" element={<ContactPage />} />
+          <Route path="/admin" element={<AdminPage />} />
         </Routes>
         <Footer />
       </div>

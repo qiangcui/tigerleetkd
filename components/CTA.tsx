@@ -377,15 +377,19 @@ Sent from Tiger Lee's Website Booking Form`
 
                       {[...Array(days)].map((_, i) => {
                         const d = i + 1;
+                        // Format the date string for checking server blocks
                         const dateStr = formatDate(year, month, d);
                         const isSelected = formData.date === dateStr;
                         const currentDayOfWeek = new Date(year, month, d).getDay();
                         const isSunday = currentDayOfWeek === 0;
                         const isToday = dateStr === todayStr;
 
-                        // New: Check if date is in the past
+                        // Check server blocks
+                        const serverSlots = serverBookedSlots[dateStr] || [];
+                        const isFullDayBlocked = serverSlots.includes('FULL_DAY');
+
+                        // Check if date is in the past
                         const bookingDate = new Date(year, month, d);
-                        // Reset hours to compare dates only
                         const todayDate = new Date();
                         todayDate.setHours(0, 0, 0, 0);
                         const isPast = bookingDate < todayDate;
@@ -396,6 +400,8 @@ Sent from Tiger Lee's Website Booking Form`
                           btnClass += "text-gray-300 cursor-not-allowed font-normal bg-gray-50/50";
                         } else if (isSunday) {
                           btnClass += "text-red-200 cursor-not-allowed font-normal bg-red-50/10";
+                        } else if (isFullDayBlocked) {
+                          btnClass += "text-gray-300 cursor-not-allowed font-normal bg-gray-100/50 border border-dashed border-gray-200";
                         } else if (isSelected) {
                           btnClass += "bg-gradient-to-br from-brand-red to-red-600 text-white shadow-lg shadow-red-200 scale-105 z-10";
                         } else {
@@ -410,13 +416,16 @@ Sent from Tiger Lee's Website Booking Form`
                           <button
                             key={d}
                             type="button"
-                            onClick={() => !isPast && !isSunday && handleDateClick(d)}
-                            disabled={isPast || isSunday}
+                            onClick={() => !isPast && !isSunday && !isFullDayBlocked && handleDateClick(d)}
+                            disabled={isPast || isSunday || isFullDayBlocked}
                             className={btnClass}
                           >
                             {d}
                             {isToday && !isSelected && (
                               <div className="absolute bottom-1.5 w-1 h-1 bg-brand-red rounded-full"></div>
+                            )}
+                            {isFullDayBlocked && !isPast && (
+                              <div className="absolute top-1 right-1 w-1.5 h-1.5 bg-gray-400 rounded-full"></div>
                             )}
                           </button>
                         );
@@ -449,7 +458,26 @@ Sent from Tiger Lee's Website Booking Form`
                         )}
                         {!isLoadingBookings && availableSlots.map(slot => {
                           const isServerBooked = serverBookedSlots[formData.date]?.includes(slot);
-                          const isBlocked = isServerBooked;
+
+                          // Check if the slot time is in the past for TODAY
+                          let isTimePast = false;
+                          if (formData.date === todayStr) {
+                            const now = new Date();
+                            const [time, ampm] = slot.split(' ');
+                            let [hours, minutes] = time.split(':').map(Number);
+
+                            if (ampm === 'PM' && hours < 12) hours += 12;
+                            if (ampm === 'AM' && hours === 12) hours = 0;
+
+                            const slotTime = new Date();
+                            slotTime.setHours(hours, minutes, 0, 0);
+
+                            if (slotTime < now) {
+                              isTimePast = true;
+                            }
+                          }
+
+                          const isBlocked = isServerBooked || isTimePast;
 
                           return (
                             <button
@@ -465,7 +493,7 @@ Sent from Tiger Lee's Website Booking Form`
                                 }`}
                             >
                               {isBlocked ? (
-                                <span className="relative z-10 text-[13px] line-through decoration-brand-red/50 decoration-2">Booked</span>
+                                <span className="relative z-10 text-[13px] line-through decoration-brand-red/50 decoration-2">{isTimePast && !isServerBooked ? 'Passed' : 'Booked'}</span>
                               ) : (
                                 <>
                                   <span className="relative z-10 text-[13px]">{slot}</span>

@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { Menu, X, Facebook, Youtube, Lock, ChevronDown, ArrowRight, Cake } from 'lucide-react';
 import { NavItem } from '../types';
 import { Link, useLocation } from 'react-router-dom';
-import AdminModal from './AdminModal';
 import { AnimatePresence, motion } from 'framer-motion';
 
 const navItems: NavItem[] = [
@@ -47,7 +46,6 @@ const programLinks = [
 
 const Navbar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [isAdminOpen, setIsAdminOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
   const location = useLocation();
@@ -183,8 +181,8 @@ const Navbar: React.FC = () => {
               </div>
             ))}
 
-            <button
-              onClick={() => setIsAdminOpen(true)}
+            <Link
+              to="/admin"
               className={`flex items-center justify-center w-10 h-10 rounded-full transition-all duration-300 hover:scale-105 focus:outline-none ${scrolled
                 ? 'text-gray-500 hover:text-brand-red hover:bg-gray-100'
                 : 'text-white/70 hover:text-white hover:bg-white/10'
@@ -192,7 +190,7 @@ const Navbar: React.FC = () => {
               title="Admin Portal"
             >
               <Lock size={20} />
-            </button>
+            </Link>
 
             <div className="flex items-center space-x-4">
               <Link
@@ -274,16 +272,14 @@ const Navbar: React.FC = () => {
                   )}
                 </div>
               ))}
-              <button
-                onClick={() => {
-                  setIsOpen(false);
-                  setIsAdminOpen(true);
-                }}
+              <Link
+                to="/admin"
+                onClick={() => setIsOpen(false)}
                 className="w-full text-left text-gray-500 font-medium text-lg hover:text-brand-red hover:bg-gray-100 p-2 rounded-lg transition-colors flex items-center mt-4 border-t border-gray-100 pt-4"
               >
                 <Lock size={18} className="mr-3" />
                 Admin Portal
-              </button>
+              </Link>
               <Link
                 to="/get-started"
                 className="bg-brand-red text-center text-white px-6 py-3 rounded-md font-bold hover:bg-red-700 transition-colors"
@@ -304,8 +300,7 @@ const Navbar: React.FC = () => {
         )}
       </nav>
 
-      {/* Admin Modal */}
-      <AdminModal isOpen={isAdminOpen} onClose={() => setIsAdminOpen(false)} />
+
     </>
   );
 };
