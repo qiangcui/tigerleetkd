@@ -410,15 +410,15 @@ const AdminPage: React.FC = () => {
                                 ) : (
                                     <div className="space-y-3 max-h-96 overflow-y-auto">
                                         {bookings.map((booking, index) => (
-                                            <div key={index} className="bg-white p-4 rounded-lg border border-blue-200 grid grid-cols-2 md:grid-cols-9 gap-3 text-sm">
+                                            <div key={index} className="bg-white p-4 rounded-lg border border-blue-200 grid grid-cols-2 md:grid-cols-9 gap-3">
                                                 <div>
                                                     <p className="text-gray-500 text-xs text-nowrap">Date/Time</p>
-                                                    <p className="font-bold text-gray-800">{booking.date}</p>
-                                                    <p className="text-gray-600 text-xs">{booking.time}</p>
+                                                    <p className="font-bold text-gray-800 text-base">{booking.date}</p>
+                                                    <p className="text-gray-600 text-base">{booking.time}</p>
                                                 </div>
                                                 <div>
                                                     <p className="text-gray-500 text-xs">Contact Name</p>
-                                                    <p className="font-medium text-gray-800">{booking.name}</p>
+                                                    <p className="font-medium text-gray-800 text-base">{booking.name}</p>
                                                 </div>
                                                 <div>
                                                     <p className="text-gray-500 text-xs">Email/Phone</p>
@@ -427,20 +427,20 @@ const AdminPage: React.FC = () => {
                                                 </div>
                                                 <div>
                                                     <p className="text-gray-500 text-xs">Participant</p>
-                                                    <p className="font-medium text-gray-800">{(booking.participantName || (booking as any)['Participant Name']) || 'N/A'}</p>
+                                                    <p className="font-medium text-gray-800 text-base">{(booking.participantName || (booking as any)['Participant Name']) || 'N/A'}</p>
                                                 </div>
                                                 <div>
                                                     <p className="text-gray-500 text-xs">Age</p>
-                                                    <p className="text-gray-600">{booking.participantAge || 'N/A'}</p>
+                                                    <p className="text-gray-800 text-base">{booking.participantAge || 'N/A'}</p>
                                                 </div>
                                                 <div className="md:col-span-2">
                                                     <p className="text-gray-500 text-xs">Notes</p>
-                                                    <p className="text-gray-600 italic text-xs">{booking.notes || 'No notes'}</p>
+                                                    <p className="text-gray-800 italic text-base">{booking.notes || 'No notes'}</p>
                                                 </div>
                                                 <div className="md:col-span-2">
                                                     <p className="text-gray-500 text-xs text-nowrap">Service / Payment</p>
-                                                    <p className="text-gray-600 text-xs">{booking.service}</p>
-                                                    <p className="text-blue-600 font-bold text-[10px] uppercase">{(booking.paymentMethod || (booking as any)['Payment Method']) || 'Pay Locally'}</p>
+                                                    <p className="text-gray-800 text-base">{booking.service}</p>
+                                                    <p className="text-blue-600 font-bold text-base uppercase">{(booking.paymentMethod || (booking as any)['Payment Method']) || 'Pay Locally'}</p>
                                                 </div>
                                             </div>
                                         ))}
