@@ -9,6 +9,10 @@ interface Booking {
     email: string;
     phone: string;
     service: string;
+    participantName?: string;
+    participantAge?: string;
+    notes?: string;
+    paymentMethod?: string;
 }
 
 const AdminPage: React.FC = () => {
@@ -83,16 +87,42 @@ const AdminPage: React.FC = () => {
                 const now = new Date();
                 const todayMidnight = new Date(now.getFullYear(), now.getMonth(), now.getDate());
 
-                // Separate real bookings from manual blocks
-                const allRows = data.bookings;
+                // Normalize data from backend (map spaced keys to frontend keys)
+                const allRows = data.bookings.map((b: any) => ({
+                    ...b,
+                    date: b.date || '',
+                    time: b.time || '',
+                    service: b.service || '',
+                    name: b.name || '',
+                    email: b.email || '',
+                    phone: b.phone || '',
+                    participantName: b.participantName || b['Participant Name'] || '',
+                    participantAge: b.participantAge || b['Participant Age'] || '',
+                    notes: b.notes || '',
+                    paymentMethod: b.paymentMethod || b['Payment Method'] || 'Pay Locally'
+                }));
+
+                console.log('Normalized Rows:', allRows);
 
                 // 1. Real Customer Bookings (Today + Future)
                 const futureBookings = allRows.filter((b: Booking) => {
                     if (!b.date) return false;
 
-                    // Parse date components safely
-                    const components = b.date.split('-').map(Number);
-                    if (components.length !== 3 || components.some(isNaN)) return false;
+                    // Parse date components safely (handle YYYY-MM-DD or MM/DD/YYYY)
+                    let components: number[] = [];
+                    if (b.date.includes('-')) {
+                        components = b.date.split('-').map(Number);
+                    } else if (b.date.includes('/')) {
+                        const parts = b.date.split('/').map(Number);
+                        // Assume MM/DD/YYYY if length 3 and last part is large
+                        if (parts[2] > 1000) components = [parts[2], parts[0], parts[1]];
+                        else components = parts;
+                    }
+
+                    if (components.length !== 3 || components.some(isNaN)) {
+                        console.warn('Invalid date format:', b.date);
+                        return false;
+                    }
 
                     const bDate = new Date(components[0], components[1] - 1, components[2]);
 
@@ -113,7 +143,8 @@ const AdminPage: React.FC = () => {
                 // 3. Derive Blocked Slots
                 const slotsObj: Record<string, string[]> = {};
                 allRows.forEach((b: Booking) => {
-                    if ((b.service === 'MANUAL_BLOCK' || b.name === 'Admin Block') && b.time && b.time !== 'FULL DAY BLOCK') {
+                    const isManualBlock = b.service === 'MANUAL_BLOCK' || b.name === 'Admin Block';
+                    if (isManualBlock && b.time && b.time !== 'FULL DAY BLOCK') {
                         if (!slotsObj[b.date]) slotsObj[b.date] = [];
                         if (!slotsObj[b.date].includes(b.time)) slotsObj[b.date].push(b.time);
                     }
@@ -249,12 +280,22 @@ const AdminPage: React.FC = () => {
         }
     };
 
-    // Common time slots
-    const timeSlots = [
-        '4:30 PM', '5:00 PM', '5:30 PM', '6:00 PM', // Mon-Thu
-        '6:30 PM', // Fri
-        '11:00 AM', '11:30 AM', '12:00 PM' // Sat
-    ];
+    // Dynamic time slots based on day of week
+    const getDynamicTimeSlots = () => {
+        if (!selectedDate) return [];
+
+        const components = selectedDate.split('-').map(Number);
+        if (components.length !== 3) return [];
+        const dateObj = new Date(components[0], components[1] - 1, components[2]);
+        const day = dateObj.getDay(); // 0=Sun, 1=Mon...6=Sat
+
+        if (day >= 1 && day <= 4) return ['4:30 PM', '5:00 PM', '5:30 PM', '6:00 PM']; // Mon-Thu
+        if (day === 5) return ['5:30 PM', '6:00 PM', '6:30 PM']; // Fri
+        if (day === 6) return ['11:00 AM', '11:30 AM', '12:00 PM']; // Sat
+        return []; // Sunday
+    };
+
+    const timeSlots = getDynamicTimeSlots();
 
     return (
         <div className="pt-0 bg-white">
@@ -369,30 +410,37 @@ const AdminPage: React.FC = () => {
                                 ) : (
                                     <div className="space-y-3 max-h-96 overflow-y-auto">
                                         {bookings.map((booking, index) => (
-                                            <div key={index} className="bg-white p-4 rounded-lg border border-blue-200 grid grid-cols-2 md:grid-cols-6 gap-3 text-sm">
+                                            <div key={index} className="bg-white p-4 rounded-lg border border-blue-200 grid grid-cols-2 md:grid-cols-9 gap-3 text-sm">
                                                 <div>
-                                                    <p className="text-gray-500 text-xs">Date</p>
+                                                    <p className="text-gray-500 text-xs text-nowrap">Date/Time</p>
                                                     <p className="font-bold text-gray-800">{booking.date}</p>
+                                                    <p className="text-gray-600 text-xs">{booking.time}</p>
                                                 </div>
                                                 <div>
-                                                    <p className="text-gray-500 text-xs">Time</p>
-                                                    <p className="font-bold text-gray-800">{booking.time}</p>
-                                                </div>
-                                                <div>
-                                                    <p className="text-gray-500 text-xs">Name</p>
+                                                    <p className="text-gray-500 text-xs">Contact Name</p>
                                                     <p className="font-medium text-gray-800">{booking.name}</p>
                                                 </div>
                                                 <div>
-                                                    <p className="text-gray-500 text-xs">Email</p>
+                                                    <p className="text-gray-500 text-xs">Email/Phone</p>
                                                     <p className="text-gray-600 truncate">{booking.email}</p>
-                                                </div>
-                                                <div>
-                                                    <p className="text-gray-500 text-xs">Phone</p>
                                                     <p className="text-gray-600">{booking.phone}</p>
                                                 </div>
                                                 <div>
-                                                    <p className="text-gray-500 text-xs">Service</p>
+                                                    <p className="text-gray-500 text-xs">Participant</p>
+                                                    <p className="font-medium text-gray-800">{(booking.participantName || (booking as any)['Participant Name']) || 'N/A'}</p>
+                                                </div>
+                                                <div>
+                                                    <p className="text-gray-500 text-xs">Age</p>
+                                                    <p className="text-gray-600">{booking.participantAge || 'N/A'}</p>
+                                                </div>
+                                                <div className="md:col-span-2">
+                                                    <p className="text-gray-500 text-xs">Notes</p>
+                                                    <p className="text-gray-600 italic text-xs">{booking.notes || 'No notes'}</p>
+                                                </div>
+                                                <div className="md:col-span-2">
+                                                    <p className="text-gray-500 text-xs text-nowrap">Service / Payment</p>
                                                     <p className="text-gray-600 text-xs">{booking.service}</p>
+                                                    <p className="text-blue-600 font-bold text-[10px] uppercase">{(booking.paymentMethod || (booking as any)['Payment Method']) || 'Pay Locally'}</p>
                                                 </div>
                                             </div>
                                         ))}
@@ -471,9 +519,18 @@ const AdminPage: React.FC = () => {
                                             className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-red outline-none"
                                         >
                                             <option value="">Select time...</option>
-                                            {timeSlots.map(slot => (
-                                                <option key={slot} value={slot}>{slot}</option>
-                                            ))}
+                                            {timeSlots
+                                                .filter(slot => {
+                                                    if (!selectedDate) return true;
+                                                    // Filter out manual blocks
+                                                    const isBlocked = blockedSlots[selectedDate]?.includes(slot);
+                                                    // Filter out actual customer bookings
+                                                    const isBooked = bookings.some(b => b.date === selectedDate && b.time === slot);
+                                                    return !isBlocked && !isBooked;
+                                                })
+                                                .map(slot => (
+                                                    <option key={slot} value={slot}>{slot}</option>
+                                                ))}
                                         </select>
                                         <button
                                             onClick={handleBlockTimeSlot}
@@ -490,7 +547,7 @@ const AdminPage: React.FC = () => {
                                                 <div key={date} className="bg-white p-4 rounded-lg border border-gray-200">
                                                     <p className="font-bold text-gray-800 mb-2">{date}</p>
                                                     <div className="space-y-2">
-                                                        {times.map(time => (
+                                                        {(times as string[]).map(time => (
                                                             <div key={time} className="flex justify-between items-center bg-gray-50 px-3 py-2 rounded">
                                                                 <span className="text-gray-700 text-sm">{time}</span>
                                                                 <button

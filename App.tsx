@@ -14,6 +14,7 @@ import FAQPage from './pages/FAQPage';
 import EducationPage from './pages/EducationPage';
 import ContactPage from './pages/ContactPage';
 import AdminPage from './pages/AdminPage';
+import SuccessPage from './pages/SuccessPage';
 
 // Component to scroll to top on route change or handle hash scrolling
 const ScrollToTop = () => {
@@ -43,6 +44,16 @@ const ScrollToTop = () => {
   return null;
 };
 
+const PaymentComplete = () => {
+  useEffect(() => {
+    if (window.opener) {
+      window.opener.postMessage('PAYMENT_SUCCESS', '*');
+      window.close();
+    }
+  }, []);
+  return <div className="min-h-screen bg-white flex items-center justify-center font-bold">Processing Booking...</div>;
+};
+
 function App() {
   const basename = import.meta.env.BASE_URL;
 
@@ -63,6 +74,8 @@ function App() {
           <Route path="/education" element={<EducationPage />} />
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/admin" element={<AdminPage />} />
+          <Route path="/booking-success" element={<SuccessPage />} />
+          <Route path="/payment-complete" element={<PaymentComplete />} />
         </Routes>
         <Footer />
       </div>
