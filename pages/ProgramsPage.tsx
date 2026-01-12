@@ -13,7 +13,8 @@ const ProgramSection: React.FC<{
   titleClass?: string;
   fullBleed?: boolean;
   cleanImage?: boolean;
-}> = ({ id, title, subtitle, image, content, isReversed, titleClass = '', fullBleed = false, cleanImage = false }) => {
+  imageContainerClass?: string;
+}> = ({ id, title, subtitle, image, content, isReversed, titleClass = '', fullBleed = false, cleanImage = false, imageContainerClass = 'relative' }) => {
   return (
     <section id={id} className={`overflow-hidden ${fullBleed ? 'bg-white' : 'py-20 bg-gray-50'}`}>
       <div className={fullBleed ? 'w-full' : 'container mx-auto px-4'}>
@@ -23,18 +24,18 @@ const ProgramSection: React.FC<{
             <>
               {/* Image Side - Full Bleed */}
               <motion.div
-                className="lg:w-1/2 min-h-[400px] lg:min-h-0 relative"
+                className={`lg:w-1/2 ${imageContainerClass}`}
                 initial={typeof window !== 'undefined' && window.innerWidth < 768 ? { opacity: 1, x: 0 } : { opacity: 0, x: isReversed ? -30 : 30 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6 }}
               >
-                <img src={image} alt={title} className="absolute inset-0 w-full h-full object-cover" />
+                <img src={image} alt={title} className="w-full h-full object-cover" />
               </motion.div>
 
               {/* Content Side */}
               <motion.div
-                className={`lg:w-1/2 py-20 ${isReversed ? 'lg:pl-16' : 'lg:pr-16'} px-6 md:px-12`}
+                className={`lg:w-1/2 py-20 ${isReversed ? 'lg:pl-16' : 'lg:pr-16'} px-6 md:px-12 flex flex-col justify-center items-start`}
                 initial={typeof window !== 'undefined' && window.innerWidth < 768 ? { opacity: 1, x: 0 } : { opacity: 0, x: isReversed ? 30 : -30 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
@@ -133,7 +134,7 @@ const ProgramsPage: React.FC = () => {
       <ProgramSection
         id="little-tigers"
         title="Little Tigers"
-        titleClass="text-[#3452ff]"
+        titleClass="text-black"
         fullBleed={true}
         image={`${base}/assets/images/little-tigers.jpg`}
         content={
@@ -240,6 +241,7 @@ const ProgramsPage: React.FC = () => {
         title="Adult Classes"
         subtitle="Tae Kwon Do offers many benefits for adults!"
         image={`${base}/assets/images/adults.jpg`}
+        imageContainerClass="relative h-96 lg:h-[750px]"
         isReversed={true}
         fullBleed={true}
         content={
