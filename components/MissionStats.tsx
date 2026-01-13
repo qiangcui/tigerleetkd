@@ -13,7 +13,7 @@ const MissionStats: React.FC = () => {
   const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
   return (
-    <section id="mission" className="pt-10 pb-20 md:py-20 bg-white relative overflow-hidden">
+    <section id="mission" className="pt-0 pb-20 md:py-20 bg-white relative overflow-hidden">
       <div className="container mx-auto px-4 relative z-10">
         <div className="flex flex-col lg:flex-row gap-16 items-center">
 

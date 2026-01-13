@@ -352,19 +352,19 @@ const CTA: React.FC = () => {
             transition={{ delay: 0.2 }}
           >
             <div className="bg-white rounded-2xl shadow-2xl overflow-hidden relative">
-              <div className="bg-brand-red p-4 flex justify-between items-center">
-                <div className="flex flex-col">
+              <div className="bg-brand-red p-4 flex flex-col space-y-2">
+                <div className="flex justify-between items-start">
                   <h3 className="text-white font-bold text-xl uppercase tracking-wider">
                     {currentStep === 1 ? '1. Select Class' : currentStep === 2 ? '2. Select Schedule' : currentStep === 3 ? '3. Your Information' : '4. Payment'}
                   </h3>
-                  <div className="mt-2 inline-flex items-center px-4 py-1.5 rounded-lg text-base font-black bg-white text-brand-red uppercase tracking-wider shadow-lg">
-                    Trial Lesson Special - $20
-                  </div>
+                  <span className="text-red-100/50 text-sm font-bold whitespace-nowrap ml-4">Step {currentStep} of 4</span>
                 </div>
-                <span className="text-red-100/50 text-sm font-bold">Step {currentStep} of {status === 'success' ? '4' : '4'}</span>
+                <div className="w-fit inline-flex items-center px-4 py-1.5 rounded-lg text-base font-black bg-white text-brand-red uppercase tracking-wider shadow-lg">
+                  Trial Lesson Special - $20
+                </div>
               </div>
 
-              <form onSubmit={handleSubmit} className="p-8 space-y-6">
+              <form onSubmit={handleSubmit} className="px-5 py-8 md:p-8 space-y-6">
                 <AnimatePresence mode="wait">
                   {status !== 'success' ? (
                     <motion.div
@@ -426,7 +426,7 @@ const CTA: React.FC = () => {
                             className="space-y-6"
                           >
                             <div className="flex flex-col items-center space-y-6">
-                              <div className="w-full bg-white rounded-3xl p-6 shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-gray-100">
+                              <div className="w-full bg-white rounded-3xl p-4 md:p-6 shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-gray-100">
                                 {/* Calendar Header */}
                                 <div className="flex justify-between items-center mb-6">
                                   <button type="button" onClick={prevMonth} className="p-2 hover:bg-red-50 text-gray-400 hover:text-brand-red rounded-full transition-all duration-300">
@@ -449,7 +449,7 @@ const CTA: React.FC = () => {
                                   ))}
                                 </div>
 
-                                <div className="grid grid-cols-7 gap-2 lg:gap-3">
+                                <div className="grid grid-cols-7 gap-1 md:gap-3">
                                   {[...Array(firstDay)].map((_, i) => (
                                     <div key={`empty-${i}`} className="p-2"></div>
                                   ))}
